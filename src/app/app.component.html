@@ -1,0 +1,39 @@
+<!--<app-top-bar></app-top-bar>
+<app-sidebar 
+[goods]="goods"
+[users]="users"
+></app-sidebar>-->
+<!--<app-todos [todos]="todos"></app-todos>-->
+
+<!-- nav -->
+<!--
+
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link"> Goods </a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav>
+-->
+<nav class="navbar navbar-expand navbar-dark" style="background-color: #735de3;" *ngIf='user'>
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link"> Goods </a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+        <a class="nav-item nav-link" (click)="showCart()" routerLink="shopping-cart"> Cart </a>
+    </div>
+</nav>
+
+<!--
+<app-sidebar 
+[goods]="goods"
+[users]="users"
+[user]="user"
+*ngIf='user'></app-sidebar> -->
+<!-- main app container -->
+<!--<div class="container">-->
+    <router-outlet>
+
+    </router-outlet>
+<!--</div> -->

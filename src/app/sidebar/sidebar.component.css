@@ -1,0 +1,11 @@
+.done {
+  text-decoration: line-through;
+}
+
+.col li {
+
+	vertical-align: middle;
+	display: inline-block;
+	text-align: center;
+	background-color: yellow;
+}

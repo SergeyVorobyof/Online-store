@@ -1,0 +1,17 @@
+<p>shopping-cart works!</p>
+
+<div class="show-cart" *ngIf="user.shoppingCart; else noCart"> 
+	<div class='good' *ngFor="let good of user.shoppingCart.goods; let i = index">
+        <img width="300" height="300" alt="good logo" [src]="good.iconUrl">
+	    <div>
+	        {{ i + 1}}
+	        {{ good.id }}
+	        {{ good.title }}
+	        {{ good.category }}
+	    </div>
+    </div>
+</div>
+
+<ng-template #noCart>
+	no goods in the cart!!!
+</ng-template>
