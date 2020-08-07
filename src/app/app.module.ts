@@ -24,6 +24,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { GoodAdditionComponent } from './good-addition/good-addition.component';
 import { ModalModule } from './good-addition';
 import { FormsModule } from '@angular/forms';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     LoginComponent,
     ShoppingCartComponent,
+    ImageUploadComponent,
     //GoodAdditionComponent,
 
   ],

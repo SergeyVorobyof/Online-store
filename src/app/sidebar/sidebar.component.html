@@ -48,100 +48,32 @@
             <div>
                 <h1>Home</h1>
                 <p>{{bodyText}}</p>
-                <button (click)="openModalj()">Open Modal 1</button>
+                <button (click)="openModal()">Open Modal 1</button>
             </div>
             <app-good-addition id="modal-1">
                     <h1>A Custom Modal!</h1>
                     <form>
-                        <label class="image-upload-container btn btn-bwm">
-                          <span>Select Image</span>
-                          <input #imageInput
-                                 type="file"
-                                 accept="image/*"
-                                 >
-                        </label>
+                        <!--<bwm-image-upload></bwm-image-upload>-->
+                        <input type="file" (change)="onFileChanged($event)">
                         <p>Description: <input type="text" name=" _"></p>
+                        <button type="sendfile" (click)="onUpload()">Upload</button>
                     </form>
-                    <button (click)="closeModalj()">Close</button>
+                    <button (click)="closeModal()">Close</button>
             </app-good-addition>
             
-            <!--
-            <style>
-                .jw-modal-wrapper{
-                    display: none;
-                }
 
-                .jw-modal {
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    left: 0;
-                    bottom: 0;
-
-                    z-index: 1000;
-                    overflow: auto;
-                }
-
-                .jw-modal-body {
-                    padding: 20px;
-                    background-color: #fff;
-                    margin: 40px;
-                }
-
-                .jw-modal-background {
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    left: 0;
-                    bottom: 0;
-
-                    background-color: #000;
-                    opacity: 0.75;
-                    z-index: 900;
-                }
-
-                body.jw-modal-open {
-                    overflow: hidden;
-                }
-            </style>
-
-            <script>
-                function openModalj(){
-                    document.getElementById('modal-1').style.display='block';
-                    document.body.classList.add('jw-modal-open');
-                }
-
-                function closeModalj(){
-                    document.getElementById('modal-1').style.display='none';
-                    document.body.classList.remove('jw-modal-open');
-                }
-            </script>
-
-            <button (click)="openModalj()">OpenModal</button>
-
-            <div class="jw-modal-wrapper" id="modal-1">
-                <div class="jw-modal">
-                    <div class="jw-modal-body">
-                        <p>Some text in jw-modal-body</p>
-                        <button (click)="closeModalj()">OpenModal</button>
-                    </div>
-                </div>
-                <div class="jw-modal-background">
-                    
-                </div>
-            </div>
-            -->
-            <!--
-            -->
             <p>goods works</p>
             <p>first</p>
             <button class="ad" (click)="onAdd()">+</button>
             <!-- HERE TO WATCH-->
             
             <ul>
+                <!--<li *ngIf="url">
+                    <img width="300" height="300" alt="orange" [src]="url">
+                </li>
+                -->
             	<li *ngFor="let good of goodService.goods; let i = index">
             		<div>
-                        <!--<img src="../assets/good.jpg" >-->
                         <img width="300" height="300" alt="good logo" [src]="good.iconUrl">
             		
                     </div>

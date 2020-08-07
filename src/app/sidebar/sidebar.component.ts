@@ -15,6 +15,7 @@ import { ModalService } from '../good-addition';
 export class SidebarComponent implements OnInit {
   /////////
   bodyText: string;
+  url: any;
   ////////
   goods: Good[] = []
   onToggle = new EventEmitter<number>()
@@ -30,17 +31,63 @@ export class SidebarComponent implements OnInit {
       this.bodyText = 'This text can be updated in modal 1';
   }
   /////////////////
-  openModalj(){
+  openModal(){
       document.getElementById('modal-1').style.display='block';
       document.body.classList.add('jw-modal-open');
   }
 
-  closeModalj(){
+  closeModal(){
       document.getElementById('modal-1').style.display='none';
       document.body.classList.remove('jw-modal-open');
   }
 
-  
+  onFileChanged(event){
+      const file = event.target.files[0]
+      console.log(file)
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = (event) => {
+          this.url = event.target.result;
+          //console.log(this.url)
+      }
+
+      //new_good = {}
+      //console.log(file)
+      //console.log(event.target.files)
+      //console.log(reader.result)
+      //console.log(this.goodService.goods)
+  }
+
+  onUpload(){
+      this.goodService.goods.sort(function(a,b){
+          if (a.id > b.id) {
+              return 1;
+          }
+
+          if (a.id < b.id) {
+              return -1;
+          }
+
+          return 0
+      })
+
+      var newGood: Good;
+      var index: number;
+
+      for (var i = 0; i < this.goodService.goods.length; ++i){
+           if (this.goodService.goods[i].id > i+1){
+               index = i+1;
+               break;
+           }
+
+           if (i === this.goodService.goods.length - 1) {
+               index = i+2;
+           }
+      }
+      newGood =  {id: index, iconUrl: this.url, title: 'TEMP TITle', price: 1, category:'TMP', available: 1, date: new Date()}
+      this.goodService.goods.splice(this.goodService.goods.length, 0, newGood)
+      console.log(this.goodService.goods)
+  }
   ////////////////////////
   onChange(id: number) {
       this.onToggle.emit(id)
