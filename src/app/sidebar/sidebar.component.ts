@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {Good, Cart, GoodService, UserService, AuthenticationService} from '../_services';
 import { User } from '../_models';
 import {MyUser} from '../app.component';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import {Location} from '@angular/common'; 
 import { ModalService } from '../good-addition';
+
 
 
 @Component({
@@ -16,6 +17,7 @@ export class SidebarComponent implements OnInit {
   /////////
   bodyText: string;
   url: any;
+  goodForm = new FormGroup({ description: new FormControl('')});
   ////////
   goods: Good[] = []
   onToggle = new EventEmitter<number>()
@@ -50,7 +52,7 @@ export class SidebarComponent implements OnInit {
           this.url = event.target.result;
           //console.log(this.url)
       }
-
+      
       //new_good = {}
       //console.log(file)
       //console.log(event.target.files)
@@ -84,9 +86,16 @@ export class SidebarComponent implements OnInit {
                index = i+2;
            }
       }
-      newGood =  {id: index, iconUrl: this.url, title: 'TEMP TITle', price: 1, category:'TMP', available: 1, date: new Date()}
-      this.goodService.goods.splice(this.goodService.goods.length, 0, newGood)
+      console.log('IconURL', this.url)
+      if (this.url) {
+          newGood =  {id: index, iconUrl: this.url, title: 'TEMP TITle', price: 1, category:'TMP', available: 1, date: new Date()}
+          this.goodService.goods.splice(this.goodService.goods.length, 0, newGood)
+      } else {
+          alert('Choose new image')
+      }
       console.log(this.goodService.goods)
+      this.url = null
+      this.closeModal()
   }
   ////////////////////////
   onChange(id: number) {

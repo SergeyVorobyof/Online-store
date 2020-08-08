@@ -52,12 +52,13 @@
             </div>
             <app-good-addition id="modal-1">
                     <h1>A Custom Modal!</h1>
-                    <form>
                         <!--<bwm-image-upload></bwm-image-upload>-->
                         <input type="file" (change)="onFileChanged($event)">
-                        <p>Description: <input type="text" name=" _"></p>
-                        <button type="sendfile" (click)="onUpload()">Upload</button>
+                    
+                    <form [formGroup]="goodForm">
+                        <p>Description: <input type="text" formControlName="description"></p>
                     </form>
+                        <button type="sendfile" (click)="onUpload()">Upload</button>
                     <button (click)="closeModal()">Close</button>
             </app-good-addition>
             
