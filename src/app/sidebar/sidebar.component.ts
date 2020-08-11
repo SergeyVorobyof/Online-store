@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Good, Cart, GoodService, UserService, AuthenticationService} from '../_services';
+import {Good, Cart, GoodService, UserService, AuthenticationService, ImageService} from '../_services';
 import { User } from '../_models';
 import {MyUser} from '../app.component';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import {Location} from '@angular/common'; 
 import { ModalService } from '../good-addition';
-
 
 
 @Component({
@@ -17,6 +16,7 @@ export class SidebarComponent implements OnInit {
   /////////
   bodyText: string;
   url: any;
+  description: string;
   goodForm = new FormGroup({ description: new FormControl('')});
   ////////
   goods: Good[] = []
@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
 
   checkoutForm;
 
-  constructor(public goodService: GoodService, public userService: UserService, private authenticationService: AuthenticationService, private formBuilder: FormBuilder, private location: Location, private modalService: ModalService) {
+  constructor(public goodService: GoodService, public userService: UserService, private authenticationService: AuthenticationService, private formBuilder: FormBuilder, private location: Location, private modalService: ModalService, private imageService: ImageService) {
       this.authenticationService.user.subscribe(x => this.user = x);
   }
 
@@ -33,6 +33,20 @@ export class SidebarComponent implements OnInit {
       this.bodyText = 'This text can be updated in modal 1';
   }
   /////////////////
+  log(x) {
+      console.log(x)
+      console.log(x.value)
+      this.description = x.value
+  }
+
+  formLog(x){
+      console.log(x)
+      console.log(x.form.valid)
+  }
+
+  onSubmit(){
+      console.log("OnSUBMIT func", this.description)
+  }
   openModal(){
       document.getElementById('modal-1').style.display='block';
       document.body.classList.add('jw-modal-open');
@@ -45,22 +59,41 @@ export class SidebarComponent implements OnInit {
 
   onFileChanged(event){
       const file = event.target.files[0]
+      if (file.name.indexOf('.jpg', file.name.length - 4) === -1 && file.name.indexOf('.png', file.name.length - 4) === -1){
+          console.log('Invalid format')
+          alert('Invalid format')
+      }
       console.log(file)
+      console.log(event.target.value)
+
       var reader = new FileReader()
-      reader.readAsDataURL(file)
+      
       reader.onload = (event) => {
           this.url = event.target.result;
-          //console.log(this.url)
+          //this.imageService.uploadImage(file).subscribe(
+          //  (res) => {
+          //      console.log('RES IMAGE SERVICE',res)
+          //  },
+          //  (err) => {
+          //
+          //  }
+          //)
       }
       
+
       //new_good = {}
       //console.log(file)
       //console.log(event.target.files)
       //console.log(reader.result)
       //console.log(this.goodService.goods)
+      reader.readAsDataURL(file)
+      //event.target.value = null
+      console.log(this.url)
+
   }
 
   onUpload(){
+      //event.target.value = null
       this.goodService.goods.sort(function(a,b){
           if (a.id > b.id) {
               return 1;
@@ -87,6 +120,9 @@ export class SidebarComponent implements OnInit {
            }
       }
       console.log('IconURL', this.url)
+      //console.log('ImageService is launched')
+      //this.imageService.uploadImage()
+      //console.log('ImageService is finished')
       if (this.url) {
           newGood =  {id: index, iconUrl: this.url, title: 'TEMP TITle', price: 1, category:'TMP', available: 1, date: new Date()}
           this.goodService.goods.splice(this.goodService.goods.length, 0, newGood)

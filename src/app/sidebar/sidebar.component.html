@@ -55,9 +55,14 @@
                         <!--<bwm-image-upload></bwm-image-upload>-->
                         <input type="file" (change)="onFileChanged($event)">
                     
-                    <form [formGroup]="goodForm">
-                        <p>Description: <input type="text" formControlName="description"></p>
+                    <form #testForm="ngForm">
+                        <label for="description">Description</label>
+                        <input required ngModel name="description" #description="ngModel" (change)="log(description)" type="text">
+                        <div class="alert alert-danger" *ngIf="description.touched && !description.valid">Description is required</div>
+                        <button *ngIf='testForm.form.valid'(click)="onSubmit(); formLog(testForm); testForm.reset();">Submit</button>
+                        <div class="alert alert-danger" *ngIf="!testForm.form.valid && testForm.form.touched">Fill the fields</div>
                     </form>
+                        <p> {{ goodForm }}</p>
                         <button type="sendfile" (click)="onUpload()">Upload</button>
                     <button (click)="closeModal()">Close</button>
             </app-good-addition>
